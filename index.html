@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .chat-column {
+            flex: 1;
+            overflow-y: auto;
+            border-right: 2px solid #333; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-column" id="chat1">
+			<div id="your_parent_element_id" class="chat-column" style="height: 100%;"></div>
+		</div>
+        <div class="chat-column" id="chat2">
+			<div id="your_parent_element_id2" class="chat-column" style="height: 100%;"></div>
+		</div>
+		
+    </div>
+	<div id="your_parent_element_id" class="chat-column" style="height: 100%;"></div>
+
+    <script>
+		document.addEventListener('DOMContentLoaded', function () {
+        // Replace these values with your own Twitch channel name
+        const channelName = 'naeledro';
+
+        // Options for the Twitch chat
+        const chatOptions = {
+            channel: channelName,
+            parent: ['your_parent_element_id'], // Replace with the ID of the parent element in your HTML
+        };
+
+        // Initialize the Twitch Embedding Chat SDK
+        const chat = new Twitch.Embed('chat', chatOptions);
+
+        // Set up event listeners for chat events
+        chat.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+            console.log('Chat is ready');
+        });
+
+        chat.addEventListener(Twitch.Embed.CHAT_READY, () => {
+            console.log('Chat is connected');
+        });
+
+        chat.addEventListener(Twitch.Embed.CHAT_CLOSED, () => {
+            console.log('Chat is closed');
+        });
+
+        // Handle errors
+        chat.addEventListener(Twitch.Embed.ERROR, (error) => {
+            console.error(error);
+        });
+    });
+	document.getElementById("your_parent_element_id").innerHTML = 'Chat Column 1';
+    document.getElementById("your_parent_element_id2").innerHTML = 'Chat Column 2';
+    </script>
+</body>
+</html>
